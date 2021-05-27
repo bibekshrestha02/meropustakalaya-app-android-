@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "meropustakaya-mble",
+    "name": "Meropustakaya-mble",
     "slug": "meropustakaya-mble",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
