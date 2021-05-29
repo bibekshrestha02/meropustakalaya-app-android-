@@ -7,6 +7,7 @@ import MyInputText from '../../components/MyInputs/MyInputText';
 import * as Yup from 'yup';
 
 const LoginScreen = ({ navigation, route }) => {
+  console.log(route);
   const values = {
     email: '',
     password: '',
@@ -20,6 +21,9 @@ const LoginScreen = ({ navigation, route }) => {
   };
   return (
     <View style={styles.container}>
+      {route.params && (
+        <Text style={styles.errorText}>* {route.params.message}</Text>
+      )}
       <FormContainerComponent
         values={values}
         validationSchema={validationSchema}
@@ -60,5 +64,12 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     margin: 10,
     color: Color.lightBlack,
+  },
+  errorText: {
+    fontSize: 16,
+    fontFamily: 'Gentium',
+    letterSpacing: 1,
+    marginLeft: 10,
+    color: Color.red,
   },
 });

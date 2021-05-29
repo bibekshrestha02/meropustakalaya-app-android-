@@ -14,6 +14,7 @@ const initalState = {
   email: '',
   join_at: '',
   subscriptionDetail: null,
+  token: '',
 };
 
 const ClientReducer = (state = initalState, action) => {
@@ -29,6 +30,7 @@ const ClientReducer = (state = initalState, action) => {
         join_at,
         subscriptionDetail,
       } = action.payload.data;
+      const { token } = action.payload;
       return {
         role,
         isVerfied,
@@ -38,6 +40,7 @@ const ClientReducer = (state = initalState, action) => {
         email,
         join_at,
         subscriptionDetail,
+        token,
       };
     case LOGOUT:
       return {

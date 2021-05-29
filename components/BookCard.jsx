@@ -13,6 +13,7 @@ const BookCard = ({ data }) => {
     return navigation.navigate('bookDetail', {
       name: data.name,
       id: data._id,
+      file: data.file,
     });
   };
   return (

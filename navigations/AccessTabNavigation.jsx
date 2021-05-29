@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import LoginScreen from '../screens/AccessScreens/LoginScreen';
 import SignupScreen from '../screens/AccessScreens/SignupScreen';
 import { Color } from '../utils/colors';
-const AccessTabNavigation = () => {
+const AccessTabNavigation = ({ route }) => {
   const Tab = createMaterialTopTabNavigator();
   return (
     <Tab.Navigator

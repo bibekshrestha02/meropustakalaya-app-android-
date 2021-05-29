@@ -7,12 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from '../../utils/Axios';
 export const authAction = (data, token) => {
   return async (dispatch) => {
-    console.log(token);
     await AsyncStorage.setItem('token', token);
     dispatch({
       type: LOGIN,
       payload: {
         data: data,
+        token,
       },
     });
   };
@@ -40,6 +40,7 @@ export const autoLogin = () => {
       type: LOGIN,
       payload: {
         data: res.data.data,
+        token: token,
       },
     });
   };

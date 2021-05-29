@@ -12,7 +12,7 @@ import FindAccountScreen from '../screens/AccessScreens/FindAccountScreen';
 import NewPasswordScreen from '../screens/AccessScreens/NewPasswordScreen';
 import MembershipScreen from '../screens/DefaultScreens/membership/MembershipScreen';
 import ProfileScreen from '../screens/DefaultScreens/Profile/ProfileScreen';
-import FileViewerScreen from '../screens/DefaultScreens/FileViewerScreen';
+import FileViewerScreen from '../screens/DefaultScreens/FileViewer/FileViewerScreen';
 
 import { autoLogin } from '../store/actions/ClientAction';
 import { useDispatch } from 'react-redux';
