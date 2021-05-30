@@ -1,18 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from '../../../../utils/colors';
 
-const CheckValueComponent = ({ name, value }) => {
+const CheckValueComponent = ({ title, value, onChange, isSelected }) => {
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => onChange(value)}>
       <Ionicons
-        name={value ? 'ios-checkbox' : 'md-square-outline'}
+        name={isSelected ? 'ios-checkbox' : 'md-square-outline'}
         color={Color.black}
         size={18}
       />
-      <Text style={styles.Text}> {name}</Text>
-    </View>
+      <Text style={styles.Text}> {title}</Text>
+    </Pressable>
   );
 };
 

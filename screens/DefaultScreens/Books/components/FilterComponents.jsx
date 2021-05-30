@@ -4,11 +4,17 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Color } from '../../../../utils/colors';
 import Title from '../../../../widgets/Title';
 import CheckValueComponent from './CheckValueComponent';
-const FilterComponents = ({ categoryData }) => {
+const FilterComponents = ({ categoryData, filterChangeHandler }) => {
   const [isToogle, setToogle] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
   const toogleHandler = () => {
     setToogle((e) => !e);
   };
+  const onChangeHandler = (value) => {
+    setSelectedValue(value);
+    filterChangeHandler(value);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -26,17 +32,24 @@ const FilterComponents = ({ categoryData }) => {
       {isToogle && (
         <View style={styles.sliderContainer}>
           <Title name='Categories' />
+          <CheckValueComponent
+            isSelected={'' === selectedValue}
+            value={''}
+            title={'All'}
+            onChange={onChangeHandler}
+          />
           {categoryData &&
             categoryData.map((category) => {
               return (
-                <CheckValueComponent key={category._id} name={category.title} />
+                <CheckValueComponent
+                  isSelected={category.name === selectedValue}
+                  key={category._id}
+                  value={category.name}
+                  title={category.title}
+                  onChange={onChangeHandler}
+                />
               );
             })}
-
-          <Title name='Sort By' />
-          <CheckValueComponent name='Rating' value={true} />
-          <CheckValueComponent name='New Arrivals' value={false} />
-          <CheckValueComponent name='Name' value={false} />
         </View>
       )}
     </View>
@@ -71,12 +84,8 @@ const styles = StyleSheet.create({
     color: Color.lightBlack,
   },
   sliderContainer: {
-    backgroundColor: 'white',
     alignItems: 'flex-start',
-    position: 'absolute',
-    top: 50,
     width: '100%',
-    elevation: 5,
     padding: 10,
   },
 });
