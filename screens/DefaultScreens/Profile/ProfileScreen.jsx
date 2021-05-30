@@ -16,7 +16,7 @@ const ProfileScreen = ({ navigation }) => {
     useState(false);
   const dispatch = useDispatch();
   const logOutHandler = async () => {
-    Alert.alert('Are you sure?', '', [
+    Alert.alert('Are you sure?', 'You want to logout your account.', [
       {
         text: 'Cancel',
         style: 'cancel',
