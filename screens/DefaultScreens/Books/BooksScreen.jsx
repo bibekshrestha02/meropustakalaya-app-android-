@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import FilterComponents from './components/FilterComponents';
-import GetFetchScreenTemplete from '../../../templetes/GetFetchScreenTemplete';
 import Axios from '../../../utils/Axios';
 import BookCardTempelete from '../../../templetes/BookCardTempelete';
 import useFetchApi from '../../../customHooks/useFetchApiHooks';
@@ -45,7 +44,6 @@ const BooksScreen = () => {
     return <Loading />;
   }
   if (status === FETCH_ERROR) {
-    console.log(error);
     return <ErrorComponent retryHandler={fetchDataHandler} />;
   }
 

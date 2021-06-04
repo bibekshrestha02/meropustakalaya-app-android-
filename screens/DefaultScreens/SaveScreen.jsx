@@ -1,32 +1,36 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import GetFetchScreenTemplete from '../../templetes/GetFetchScreenTemplete';
-import Axios from '../../utils/Axios';
 import BookCardTempelete from '../../templetes/BookCardTempelete';
+import Axios from '../../utils/Axios';
+import useFetchApi from '../../customHooks/useFetchApiHooks';
+import Loading from '../../components/LoadingComponent';
+import {
+  FETCH_ERROR,
+  FETCHING,
+} from '../../store/constant/fetchReducerConstant';
+import ErrorComponent from '../../components/ErrorComponent';
+
 const SaveScreen = () => {
   const fetchSave = async () => {
     return Axios.get('/users/saves');
   };
-
+  const {
+    state: { data, status },
+    fetchDataHandler,
+  } = useFetchApi(fetchSave());
+  if (status === FETCHING || status === 'idle') {
+    return <Loading />;
+  }
+  if (status === FETCH_ERROR) {
+    return <ErrorComponent retryHandler={fetchDataHandler} />;
+  }
   return (
-    <GetFetchScreenTemplete fetchURL={[fetchSave()]}>
-      {(data) => {
-        return (
-          <BookCardTempelete data={data} emptyMessage={'No Books Save yet'} />
-        );
-      }}
-    </GetFetchScreenTemplete>
+    <BookCardTempelete
+      data={data[0]}
+      refreshing={status === FETCHING}
+      onRefresh={fetchDataHandler}
+      emptyMessage={'No Books Save yet'}
+    />
   );
 };
 
 export default SaveScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
