@@ -40,6 +40,6 @@ const useFetchApi = (...url) => {
       cancelRequest = true;
     };
   }, [url.length]);
-  return { state, fetchDataHandler: fetchData };
+  return { state, fetchDataHandler: fetchData, dispatchAction: dispatch };
 };
 module.exports = useFetchApi;
