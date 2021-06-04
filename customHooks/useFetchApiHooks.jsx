@@ -1,32 +1,24 @@
-import { useRef, useReducer, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
 import { initalState, reducer } from '../store/reducer/FetchReducer';
 import {
   FETCHED,
   FETCH_ERROR,
   FETCHING,
 } from '../store/constant/fetchReducerConstant';
-import Axios from '../utils/Axios';
-const useFetchApi = (url) => {
-  const cache = useRef({});
-
+import Axios from 'axios';
+const useFetchApi = (...url) => {
+  let cancelRequest = false;
   const [state, dispatch] = useReducer(reducer, initalState);
-  useEffect(() => {
-    let cancelRequest = false;
-    if (!url) return;
-    const fetchData = async () => {
-      dispatch({ type: FETCHING });
-      if (cache.current[url]) {
-        const data = cache.current[url];
-        dispatch({
-          type: FETCHED,
-          payload: {
-            data,
-          },
-        });
-      } else {
-        try {
-          const { data } = await (await Axios.get(url)).data;
-          cache.current[url] = data;
+  const fetchData = async () => {
+    dispatch({ type: FETCHING });
+
+    Axios.all(url)
+      .then(
+        Axios.spread((...responses) => {
+          let data = [];
+          responses.forEach((res) => {
+            return data.push(res.data.data);
+          });
           if (cancelRequest) return;
           dispatch({
             type: FETCHED,
@@ -34,17 +26,20 @@ const useFetchApi = (url) => {
               data,
             },
           });
-        } catch (error) {
-          if (cancelRequest) return;
-          dispatch({ type: FETCH_ERROR, payload: error.message });
-        }
-      }
-    };
+        })
+      )
+      .catch((error) => {
+        if (cancelRequest) return;
+        dispatch({ type: FETCH_ERROR, payload: error.message });
+      });
+  };
+  useEffect(() => {
+    if (url.length < 1) return;
     fetchData();
     return function cleanup() {
       cancelRequest = true;
     };
-  }, [url]);
-  return state;
+  }, [url.length]);
+  return { state, fetchDataHandler: fetchData };
 };
 module.exports = useFetchApi;
