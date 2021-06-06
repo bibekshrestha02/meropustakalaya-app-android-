@@ -4,13 +4,10 @@ import CarouselComponent from './components/CarouselComponent';
 import Title from '../../../widgets/Title';
 import BookCardTempelete from '../../../templetes/BookCardTempelete';
 import useFetchApi from '../../../customHooks/useFetchApiHooks';
-import Loading from '../../../components/LoadingComponent';
-import {
-  FETCH_ERROR,
-  FETCHING,
-} from '../../../store/constant/fetchReducerConstant';
-import ErrorComponent from '../../../components/ErrorComponent';
 
+import { FETCHING } from '../../../store/constant/fetchReducerConstant';
+
+import FetchApiTemplete from '../../../templetes/FetchApiTemplete';
 const HomeScreen = () => {
   const getCarousel = () => {
     return Axios.get('/carousels');
@@ -22,14 +19,9 @@ const HomeScreen = () => {
     state: { data, status },
     fetchDataHandler,
   } = useFetchApi(getCarousel(), getBooks());
-  if (status === FETCHING || status === 'idle') {
-    return <Loading />;
-  }
-  if (status === FETCH_ERROR) {
-    return <ErrorComponent retryHandler={fetchDataHandler} />;
-  }
+
   return (
-    <>
+    <FetchApiTemplete status={status} retryHandler={fetchDataHandler}>
       <CarouselComponent
         name={data[0] && data[0].name}
         subDetail={data[0] && data[0].subDetail}
@@ -44,7 +36,7 @@ const HomeScreen = () => {
         onRefresh={fetchDataHandler}
         emptyMessage={'No Book Data found'}
       />
-    </>
+    </FetchApiTemplete>
   );
 };
 
