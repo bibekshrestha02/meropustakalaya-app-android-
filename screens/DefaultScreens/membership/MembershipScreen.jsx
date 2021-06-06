@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import CardComponent from './Components/CardComponent';
 import Title from '../../../widgets/Title';
-import GetFetchScreenTemplete from '../../../templetes/GetFetchScreenTemplete';
 import Axios from '../../../utils/Axios';
 import PaymentModel from './Components/PaymentModel';
 import LoadingComponent from '../../../components/LoadingComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { subscribeAction } from '../../../store/actions/ClientAction';
 import TimerModalComponent from '../../../components/TimerModalComponent';
+import FetchApiTemplete from '../../../templetes/FetchApiTemplete';
+import useFetchApiHooks from '../../../customHooks/useFetchApiHooks';
+
 const MembershipScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [selectedCard, setSelectedCard] = useState({});
@@ -17,12 +19,16 @@ const MembershipScreen = ({ navigation }) => {
   const [isMessageModal, setMessageModal] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState('');
   const isLogin = useSelector((state) => state.client.isVerfied);
+  const {
+    state: { status, data },
+    fetchDataHandler,
+  } = useFetchApiHooks(fetchPackages());
   const modalHanlder = () => {
     setModal((e) => !e);
   };
-  const fetchPackages = () => {
+  function fetchPackages() {
     return Axios.get('/packages');
-  };
+  }
   const selectCardHandler = (item) => {
     setSelectedCard(item);
     setModal(true);
@@ -55,61 +61,54 @@ const MembershipScreen = ({ navigation }) => {
     setPaymentProcess(false);
   };
   return (
-    <GetFetchScreenTemplete fetchURL={[fetchPackages()]}>
-      {(data) => {
-        return (
-          <View style={styles.container}>
-            <Title
-              name='Get unlimited access to everything'
-              textStyle={{
-                fontSize: 30,
-                fontFamily: 'Gentium',
-                textAlign: 'center',
-              }}
+    <FetchApiTemplete status={status} retryHandler={fetchDataHandler}>
+      <FlatList
+        ListHeaderComponent={
+          <Title
+            name='Get unlimited access to everything'
+            textStyle={styles.titleText}
+          />
+        }
+        data={data[0]}
+        renderItem={({ item }) => {
+          return (
+            <CardComponent
+              item={item}
+              isSelected={selectedCard._id === item._id}
+              selectCardHandler={selectCardHandler}
             />
-            <FlatList
-              data={data}
-              renderItem={({ item }) => {
-                return (
-                  <CardComponent
-                    item={item}
-                    isSelected={selectedCard._id === item._id}
-                    selectCardHandler={selectCardHandler}
-                  />
-                );
-              }}
-              keyExtractor={(items) => items._id}
-            />
-            <TimerModalComponent
-              isVisible={isMessageModal}
-              isSuccess={paymentStatus === 'success'}
-              message={
-                paymentStatus === 'success'
-                  ? 'Your transaction was successfull'
-                  : 'Your transaction was failed. Try again!'
-              }
-            />
-            <LoadingComponent
-              isVisible={isPaymentProcess}
-              message={'processing...'}
-            />
-            <PaymentModel
-              isVisible={isModal}
-              item={selectedCard}
-              modalHandler={modalHanlder}
-              paymentHandler={paymentHandler}
-            />
-          </View>
-        );
-      }}
-    </GetFetchScreenTemplete>
+          );
+        }}
+        keyExtractor={(items) => items._id}
+      />
+      <TimerModalComponent
+        isVisible={isMessageModal}
+        isSuccess={paymentStatus === 'success'}
+        message={
+          paymentStatus === 'success'
+            ? 'Your transaction was successfull'
+            : 'Your transaction was failed. Try again!'
+        }
+      />
+      <LoadingComponent
+        isVisible={isPaymentProcess}
+        message={'processing...'}
+      />
+      <PaymentModel
+        isVisible={isModal}
+        item={selectedCard}
+        modalHandler={modalHanlder}
+        paymentHandler={paymentHandler}
+      />
+    </FetchApiTemplete>
   );
 };
 
 export default MembershipScreen;
-
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: 20,
+  titleText: {
+    fontSize: 30,
+    fontFamily: 'Gentium',
+    textAlign: 'center',
   },
 });

@@ -4,13 +4,13 @@ import FilterComponents from './components/FilterComponents';
 import Axios from '../../../utils/Axios';
 import BookCardTempelete from '../../../templetes/BookCardTempelete';
 import useFetchApi from '../../../customHooks/useFetchApiHooks';
-import Loading from '../../../components/LoadingComponent';
+import FetchApiTemplete from '../../../templetes/FetchApiTemplete';
 import {
   FETCH_ERROR,
   FETCHING,
   FETCHED,
 } from '../../../store/constant/fetchReducerConstant';
-import ErrorComponent from '../../../components/ErrorComponent';
+
 const BooksScreen = () => {
   const fetchCategory = () => {
     return Axios.get('/categories/');
@@ -40,26 +40,21 @@ const BooksScreen = () => {
     }
   };
 
-  if (status === FETCHING || status === 'idle') {
-    return <Loading />;
-  }
-  if (status === FETCH_ERROR) {
-    return <ErrorComponent retryHandler={fetchDataHandler} />;
-  }
-
   return (
-    <View style={styles.container}>
-      <FilterComponents
-        categoryData={data[0]}
-        filterChangeHandler={filterChangeHandler}
-      />
-      <BookCardTempelete
-        data={data[1]}
-        refreshing={status === FETCHING}
-        onRefresh={fetchDataHandler}
-        emptyMessage={'No Book Data found'}
-      />
-    </View>
+    <FetchApiTemplete status={status} retryHandler={fetchDataHandler}>
+      <View style={styles.container}>
+        <FilterComponents
+          categoryData={data[0]}
+          filterChangeHandler={filterChangeHandler}
+        />
+        <BookCardTempelete
+          data={data[1]}
+          refreshing={status === FETCHING}
+          onRefresh={fetchDataHandler}
+          emptyMessage={'No Book Data found'}
+        />
+      </View>
+    </FetchApiTemplete>
   );
 };
 
