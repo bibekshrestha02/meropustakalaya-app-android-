@@ -31,18 +31,27 @@ export const autoLogin = () => {
     if (token === null) {
       return;
     }
-    const res = await Axios.get('/auths/autologin', {
-      headers: {
-        'x-auth-token': token,
-      },
-    });
-    dispatch({
-      type: LOGIN,
-      payload: {
-        data: res.data.data,
-        token: token,
-      },
-    });
+    try {
+      const res = await Axios.get('/auths/autologin', {
+        headers: {
+          'x-auth-token': token,
+        },
+      });
+      dispatch({
+        type: LOGIN,
+        payload: {
+          data: res.data.data,
+          token: token,
+        },
+      });
+    } catch (error) {
+      if (!error.response) {
+        return;
+      } else {
+        await AsyncStorage.removeItem('token');
+        return;
+      }
+    }
   };
 };
 export const subscribeAction = (id) => {
