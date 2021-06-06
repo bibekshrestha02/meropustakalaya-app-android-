@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import { getDay } from '../utils/HelperFn';
 const UnAuthHeaderComponent = () => {
   const isVerfied = useSelector((state) => state.client.isVerfied);
+  const name = useSelector((state) => state.client.name);
+
   const subscriptionDetail = useSelector(
     (state) => state.client.subscriptionDetail
   );
@@ -50,7 +52,7 @@ const UnAuthHeaderComponent = () => {
         )}
 
         {isVerfied ? (
-          <ProfileComponent name='Bibek' onPress={profileNavigateHandler} />
+          <ProfileComponent name={name} onPress={profileNavigateHandler} />
         ) : (
           <MyButton title='Login' onPress={loginHandler} />
         )}
