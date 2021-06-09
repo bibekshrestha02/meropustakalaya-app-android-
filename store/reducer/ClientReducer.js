@@ -4,7 +4,7 @@ const {
   SUBSCRIBE,
   BOOKMARK,
   EDITNAME,
-} = require('../actions/ClientAction');
+} = require('../constant/ClientConstant');
 const initalState = {
   role: '',
   isVerfied: null,

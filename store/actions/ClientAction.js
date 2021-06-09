@@ -1,8 +1,10 @@
-export const LOGIN = 'Login';
-export const LOGOUT = 'logout';
-export const SUBSCRIBE = 'subscribe';
-export const BOOKMARK = 'bookmark';
-export const EDITNAME = 'editName';
+import {
+  BOOKMARK,
+  EDITNAME,
+  LOGIN,
+  LOGOUT,
+  SUBSCRIBE,
+} from '../constant/ClientConstant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from '../../utils/Axios';
 export const authAction = (data, token) => {
