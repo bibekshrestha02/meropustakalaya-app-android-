@@ -77,6 +77,7 @@ export const saveBookAction = (id) => {
       type: SAVEBOOK,
       payload: {
         data: res.data.data,
+        id: id,
       },
     });
   };
