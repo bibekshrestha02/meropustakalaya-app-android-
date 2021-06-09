@@ -86,8 +86,8 @@ const MembershipScreen = ({ navigation }) => {
         isSuccess={paymentStatus === 'success'}
         message={
           paymentStatus === 'success'
-            ? 'Your transaction was successfull'
-            : 'Your transaction was failed. Try again!'
+            ? 'Congratulations! Your transaction is successfull'
+            : 'Opps! Your transaction is failed. Try again!'
         }
       />
       <LoadingComponent
