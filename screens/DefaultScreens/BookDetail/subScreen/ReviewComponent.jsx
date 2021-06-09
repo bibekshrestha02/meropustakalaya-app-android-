@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import UserReviewContainer from '../component/UserReviewContainer';
 import AccessDeniedComponent from '../../../../components/AccessDeniedComponent';
 import { useSelector } from 'react-redux';
-const ReviewComponent = ({ data, setData }) => {
+const ReviewComponent = ({ data }) => {
   let isLogin = useSelector((state) => state.client.isVerfied);
   return isLogin ? (
-    <UserReviewContainer data={data} setData={setData} />
+    <UserReviewContainer data={data} />
   ) : (
     <AccessDeniedComponent />
   );

@@ -9,26 +9,38 @@ import MyInputText from '../../../../components/MyInputs/MyInputText';
 import Axios from '../../../../utils/Axios';
 import { Alert } from 'react-native';
 import LoadingComponent from '../../../../components/LoadingComponent';
-const UserReviewContainer = ({ data, setData }) => {
+import { useDispatch } from 'react-redux';
+import {
+  addBookReviewAction,
+  deleteBookReviewAction,
+} from '../../../../store/actions/bookDetailsAction';
+const UserReviewContainer = ({ data }) => {
   let isReview = data.userReview;
+  const dispatch = useDispatch();
   const reviewSubmitHandler = async (values, { setSubmitting }) => {
     setSubmitting(true);
     try {
       values.book = data._id;
-      const res = await Axios.post('/reviews/', values);
-      let review = res.data.data;
-      let newData = {
-        ...data,
-        reviews: [...data.reviews, review],
-        userReview: review,
-      };
-      setData(newData);
+      await dispatch(addBookReviewAction(values));
     } catch (error) {
+      console.log(error);
       Alert.alert('Something went wrong!', 'Something went wrong try again');
     }
     setSubmitting(false);
   };
   const reviewDeleteHandler = async (values, { setSubmitting, setValues }) => {
+    async function handler() {
+      setSubmitting(true);
+      try {
+        let id = isReview._id;
+        await dispatch(deleteBookReviewAction(id));
+        setValues('review', '');
+        setValues('rating', 0);
+      } catch (error) {
+        Alert.alert('Something went wrong!', 'Something went wrong try again');
+      }
+      setSubmitting(false);
+    }
     Alert.alert('Are you sure?', 'You wants to delete your review.', [
       {
         text: 'Cancel',
@@ -37,27 +49,7 @@ const UserReviewContainer = ({ data, setData }) => {
       {
         text: 'Ok',
         style: 'destructive',
-        onPress: async () => {
-          setSubmitting(true);
-          try {
-            let reviewId = isReview._id;
-            await Axios.delete(`/reviews/${data.userReview._id}`);
-            const newData = {
-              ...data,
-              reviews: data.reviews.filter((e) => e._id !== reviewId),
-              userReview: null,
-            };
-            setData(newData);
-            setValues('review', '');
-            setValues('rating', 0);
-          } catch (error) {
-            Alert.alert(
-              'Something went wrong!',
-              'Something went wrong try again'
-            );
-          }
-          setSubmitting(false);
-        },
+        onPress: handler,
       },
     ]);
   };

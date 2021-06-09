@@ -5,7 +5,7 @@ import OverViewComponent from '../subScreen/OverViewComponent';
 import ReviewComponent from '../subScreen/ReviewComponent';
 import ReviewListComponent from '../subScreen/ReviewListComponent';
 import { Color } from '../../../../utils/colors';
-const TabNavigationContainer = ({ data, setData }) => {
+const TabNavigationContainer = ({ data }) => {
   const Tab = createMaterialTopTabNavigator();
   return (
     <Tab.Navigator
@@ -27,7 +27,7 @@ const TabNavigationContainer = ({ data, setData }) => {
         {() => <ReviewListComponent data={data} />}
       </Tab.Screen>
       <Tab.Screen name='Your Review'>
-        {() => <ReviewComponent data={data} setData={setData} />}
+        {() => <ReviewComponent data={data} />}
       </Tab.Screen>
     </Tab.Navigator>
   );

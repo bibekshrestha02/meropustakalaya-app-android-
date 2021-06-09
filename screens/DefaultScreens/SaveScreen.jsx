@@ -1,25 +1,43 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import BookCardTempelete from '../../templetes/BookCardTempelete';
-import Axios from '../../utils/Axios';
-import useFetchApi from '../../customHooks/useFetchApiHooks';
-import { FETCHING } from '../../store/constant/fetchReducerConstant';
+import {
+  FETCHING,
+  FETCH_ERROR,
+  FETCHED,
+} from '../../store/constant/fetchReducerConstant';
 import FetchApiTemplete from '../../templetes/FetchApiTemplete';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchSaveBooksAction } from '../../store/actions/saveBooksActions';
 
-const SaveScreen = () => {
-  const fetchSave = () => {
-    return Axios.get('/users/saves');
-  };
-  const {
-    state: { data, status },
-    fetchDataHandler,
-  } = useFetchApi(fetchSave());
+const SaveScreen = ({ navigation }) => {
+  const [status, setStatus] = useState('idle');
+  const dispatch = useDispatch();
+  const saveBooks = useSelector((state) => state.saveBooks);
+  const loadBooks = useCallback(async () => {
+    try {
+      setStatus(FETCHING);
+      await dispatch(fetchSaveBooksAction());
+      setStatus(FETCHED);
+    } catch (error) {
+      setStatus(FETCH_ERROR);
+    }
+  }, [dispatch, setStatus]);
+
+  useEffect(() => {
+    const unSubscribe = navigation.addListener('focus', loadBooks);
+    return unSubscribe;
+  }, [loadBooks]);
+
+  useEffect(() => {
+    loadBooks();
+  }, [loadBooks, dispatch]);
 
   return (
-    <FetchApiTemplete status={status} retryHandler={fetchDataHandler}>
+    <FetchApiTemplete status={status} retryHandler={loadBooks}>
       <BookCardTempelete
-        data={data[0]}
+        data={saveBooks}
         refreshing={status === FETCHING}
-        onRefresh={fetchDataHandler}
+        onRefresh={loadBooks}
         emptyMessage={'No Books Save yet'}
       />
     </FetchApiTemplete>
