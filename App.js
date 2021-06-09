@@ -4,11 +4,15 @@ import { useFonts } from 'expo-font';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import ClientReducer from './store/reducer/ClientReducer';
+import SaveBooksReducer from './store/reducer/SaveBooksReducer';
+import BookDetailsReducer from './store/reducer/BookDetailsReducer';
 import MainNavigation from './navigations/MainNavigation';
 import ReduxThunk from 'redux-thunk';
 export default function App() {
   const reducer = combineReducers({
     client: ClientReducer,
+    saveBooks: SaveBooksReducer,
+    bookDetails: BookDetailsReducer,
   });
   const store = createStore(reducer, applyMiddleware(ReduxThunk));
   const [loaded] = useFonts({
