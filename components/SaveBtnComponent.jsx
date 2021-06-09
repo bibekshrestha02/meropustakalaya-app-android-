@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from '../utils/colors';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,15 +16,22 @@ const SaveBtnComponent = ({ size, id }) => {
     }
   };
   return (
-    <View>
+    <Pressable style={styles.saveContainer} onPress={saveBookHandler}>
       <Ionicons
-        onPress={saveBookHandler}
         name={isSave ? 'md-bookmark' : 'bookmark-outline'}
         color={Color.red}
-        size={size ? size : 15}
+        size={size ? size : 20}
       />
-    </View>
+    </Pressable>
   );
 };
 
 export default SaveBtnComponent;
+const styles = StyleSheet.create({
+  saveContainer: {
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
