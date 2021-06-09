@@ -5,7 +5,7 @@ import {
   logoutAction,
   editNameAction,
   changePasswordAction,
-} from '../../../store/actions/ClientAction';
+} from '../../../store/actions/clientAction';
 import GeneralDetailComponent from './Components/GeneralDetailComponent';
 import MembershipDetailComponent from './Components/MembershipDetailComponent';
 import PasswordChangeComponent from './Components/PasswordChangeComponent';

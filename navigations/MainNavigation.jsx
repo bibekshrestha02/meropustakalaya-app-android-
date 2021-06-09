@@ -14,7 +14,7 @@ import MembershipScreen from '../screens/DefaultScreens/membership/MembershipScr
 import ProfileScreen from '../screens/DefaultScreens/Profile/ProfileScreen';
 import FileViewerScreen from '../screens/DefaultScreens/FileViewer/FileViewerScreen';
 
-import { autoLogin } from '../store/actions/ClientAction';
+import { autoLogin } from '../store/actions/clientAction';
 import { useDispatch } from 'react-redux';
 import LoadingComponent from '../components/LoadingComponent';
 const MainNavigation = () => {

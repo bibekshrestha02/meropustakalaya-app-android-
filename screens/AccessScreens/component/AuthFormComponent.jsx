@@ -6,7 +6,7 @@ import LoadingComponent from '../../../components/LoadingComponent';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import MyButton from '../../../components/MyInputs/MyButton';
-import { authAction } from '../../../store/actions/ClientAction';
+import { authAction } from '../../../store/actions/clientAction';
 const FormContainerComponent = ({
   children,
   submitRoute,

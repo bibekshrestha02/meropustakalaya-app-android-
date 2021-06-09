@@ -1,5 +1,5 @@
 import {
-  BOOKMARK,
+  SAVEBOOK,
   EDITNAME,
   LOGIN,
   LOGOUT,
@@ -70,11 +70,11 @@ export const subscribeAction = (id) => {
     });
   };
 };
-export const bookMarkAction = (id) => {
+export const saveBookAction = (id) => {
   return async (dispatch) => {
     const res = await Axios.post(`/users/saves/${id}`);
     dispatch({
-      type: BOOKMARK,
+      type: SAVEBOOK,
       payload: {
         data: res.data.data,
       },

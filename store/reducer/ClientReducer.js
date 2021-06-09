@@ -2,7 +2,7 @@ const {
   LOGIN,
   LOGOUT,
   SUBSCRIBE,
-  BOOKMARK,
+  SAVEBOOK,
   EDITNAME,
 } = require('../constant/ClientConstant');
 const initalState = {
@@ -57,7 +57,7 @@ const ClientReducer = (state = initalState, action) => {
       let data = action.payload.data;
       state.subscriptionDetail = data;
       return state;
-    case BOOKMARK:
+    case SAVEBOOK:
       data = action.payload.data;
       state.saveBook = data;
       return state;
