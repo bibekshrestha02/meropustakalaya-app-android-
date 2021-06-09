@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Url } from '../../../../utils/GlobalVariables';
-import BookMark from '../../../../components/BookMark';
+import SaveBtnComponent from '../../../../components/SaveBtnComponent';
 import { useSelector } from 'react-redux';
 const ImageContainer = ({ photoUrl, id }) => {
   const isLogin = useSelector((state) => state.client.isVerfied);
@@ -13,8 +13,8 @@ const ImageContainer = ({ photoUrl, id }) => {
         resizeMode='contain'
       />
       {isLogin && (
-        <View style={styles.bookMarkContainer}>
-          <BookMark size={30} id={id} />
+        <View style={styles.saveBtnContainer}>
+          <SaveBtnComponent size={30} id={id} />
         </View>
       )}
     </View>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  bookMarkContainer: {
+  saveBtnContainer: {
     width: 50,
     height: 50,
     borderRadius: 50,

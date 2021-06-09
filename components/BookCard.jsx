@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Color } from '../utils/colors';
-import BookMark from './BookMark';
+import SaveBtnComponent from './SaveBtnComponent';
 import Rating from './Rating';
 import { Url } from '../utils/GlobalVariables';
 import { useNavigation } from '@react-navigation/native';
@@ -45,7 +45,7 @@ const BookCard = ({ data }) => {
         </Text>
         <View style={styles.iconsContainer}>
           <Rating ratingCount={data.rating} isDisabled={true} size={15} />
-          {isLogin && <BookMark id={data._id} />}
+          {isLogin && <SaveBtnComponent id={data._id} />}
         </View>
       </View>
     </TouchableOpacity>

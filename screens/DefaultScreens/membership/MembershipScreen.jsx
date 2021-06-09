@@ -6,7 +6,7 @@ import Axios from '../../../utils/Axios';
 import PaymentModel from './Components/PaymentModel';
 import LoadingComponent from '../../../components/LoadingComponent';
 import { useSelector, useDispatch } from 'react-redux';
-import { subscribeAction } from '../../../store/actions/ClientAction';
+import { subscribeAction } from '../../../store/actions/clientAction';
 import TimerModalComponent from '../../../components/TimerModalComponent';
 import FetchApiTemplete from '../../../templetes/FetchApiTemplete';
 import useFetchApiHooks from '../../../customHooks/useFetchApiHooks';
