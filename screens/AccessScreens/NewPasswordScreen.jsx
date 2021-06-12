@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     marginVertical: 40,
   },
   textStyle: {
-    fontSize2: 20,
+    fontSize: 20,
   },
   containerStyle: {
     height: 40,
