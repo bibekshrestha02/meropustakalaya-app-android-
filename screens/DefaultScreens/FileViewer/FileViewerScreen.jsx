@@ -1,44 +1,46 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import PDFViewer from 'rn-pdf-reader-js';
-import { useSelector } from 'react-redux';
-import { Url } from '../../../utils/GlobalVariables';
 import FileLoadingComponent from './component/FileLoadingComponent';
+import useFetchApi from '../../../customHooks/useFetchApiHooks';
+import Axios from '../../../utils/Axios';
+import FetchApiTemplete from '../../../templetes/FetchApiTemplete';
 const FileViewerScreen = ({ navigation, route }) => {
-  const { name, file } = route.params;
-  const token = useSelector((state) => state.client.token);
+  const { name, id } = route.params;
   useLayoutEffect(() => {
     navigation.setOptions({
       title: name,
     });
   }, [navigation]);
+  const getFile = () => {
+    return Axios.get(`/books/file/${id}`);
+  };
+  const {
+    state: { data, status },
+    fetchDataHandler,
+  } = useFetchApi(getFile());
 
-  const filePath = Url + 'api/v1/' + file;
   const source = {
-    uri: filePath,
-    headers: {
-      'x-auth-token': token,
-    },
+    uri: status === 'FETCHED' ? data[0].file : '',
   };
   return (
-    <PDFViewer
-      source={source}
-      style={styles.container}
-      withScroll={true}
-      noLoader={false}
-      maximumPinchZoomScale={2}
-      withPinchZoom={true}
-      onError={(err) => {
-        console.log('error occures');
-      }}
-      webviewProps={{
-        startInLoadingState: true,
-        containerStyle: { flex: 1 },
-        renderLoading: () => {
-          return <FileLoadingComponent />;
-        },
-      }}
-    />
+    <FetchApiTemplete status={status} retryHandler={fetchDataHandler}>
+      <PDFViewer
+        source={source}
+        style={styles.container}
+        withScroll={true}
+        noLoader={false}
+        maximumPinchZoomScale={2}
+        withPinchZoom={true}
+        webviewProps={{
+          startInLoadingState: true,
+          containerStyle: { flex: 1 },
+          renderLoading: () => {
+            return <FileLoadingComponent />;
+          },
+        }}
+      />
+    </FetchApiTemplete>
   );
 };
 

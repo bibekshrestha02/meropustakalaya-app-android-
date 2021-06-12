@@ -36,8 +36,8 @@ const GeneralDetailComponent = ({
         <MaterialIcons name='verified-user' size={20} color='#1FAA59' />
       </TextContainerTempletes>
       <TextContainerTempletes>
-        <FontAwesome5 name='birthday-cake' size={20} color={Color.lightBlack} />
-        <Text style={styles.text}>Joined on{getYearMonths(data.join_at)}</Text>
+        <FontAwesome5 name='birthday-cake' size={14} color={Color.lightBlack} />
+        <Text style={styles.text}> Joined on{getYearMonths(data.join_at)}</Text>
       </TextContainerTempletes>
       <Pressable onPress={toogleChangePasswordModalHandler}>
         <Text style={[styles.text, { textDecorationLine: 'underline' }]}>

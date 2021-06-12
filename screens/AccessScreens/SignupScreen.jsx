@@ -57,6 +57,5 @@ const styles = StyleSheet.create({
   formContainer: {
     padding: 10,
     justifyContent: 'space-around',
-    // height: Dimensions.get('screen').height / 3,
   },
 });

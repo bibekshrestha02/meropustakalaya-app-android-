@@ -24,11 +24,11 @@ const CodeConfirmationScreen = ({ route, navigation }) => {
       await Axios.post('/auths/email/sendToken', { email });
       setLoading(false);
       Alert.alert('Success!', 'OTP code send to your email.');
+      setLoading(false);
     } catch (error) {
-      console.log(error.response);
+      setLoading(false);
       Alert.alert('Something went wrong!', 'Try Again!');
     }
-    setLoading(false);
   };
   const submitHandler = async () => {
     try {
@@ -38,15 +38,16 @@ const CodeConfirmationScreen = ({ route, navigation }) => {
       }
       setLoading(true);
       setOtpError(null);
-
       const res = await Axios.get(`${url}${email}/${OTP}`);
       if (isForgetPassword) {
+        setLoading(false);
         return navigation.navigate('newPassword', {
           otp: OTP,
           email: email,
         });
       }
       if (res.data.status === 'verfied') {
+        setLoading(false);
         Alert.alert(
           'Verified!',
           'You are successfully verified. Login to your account.',
@@ -59,6 +60,7 @@ const CodeConfirmationScreen = ({ route, navigation }) => {
         );
       }
     } catch (error) {
+      setLoading(false);
       if (error.code === 'ECONNABORTED') {
         Alert.alert(
           'Something went wrong',
@@ -84,7 +86,6 @@ const CodeConfirmationScreen = ({ route, navigation }) => {
         );
       }
     }
-    setLoading(false);
   };
   return (
     <View style={styles.container}>

@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Color } from '../utils/colors';
 import SaveBtnComponent from './SaveBtnComponent';
 import Rating from './Rating';
-import { Url } from '../utils/GlobalVariables';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 const BookCard = ({ data }) => {
@@ -24,7 +23,7 @@ const BookCard = ({ data }) => {
       <View style={styles.imageContainer}>
         <Image
           source={{
-            uri: `${Url}${data.photo}`,
+            uri: data.photo,
           }}
           resizeMode='contain'
           style={styles.image}

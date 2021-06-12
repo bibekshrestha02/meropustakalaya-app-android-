@@ -22,7 +22,6 @@ const BookDetailsScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.client.isVerfied);
   const bookDetails = useSelector((state) => state.bookDetails);
-  console.log(bookDetails);
   const subscriptionDetail = useSelector(
     (state) => state.client.subscriptionDetail
   );
@@ -47,14 +46,15 @@ const BookDetailsScreen = ({ route, navigation }) => {
         params: { message: 'Login to get access' },
       });
     }
-    const isSubscribe =
-      new Date(subscriptionDetail.expires_at).getMilliseconds() < Date.now();
+    const isSubscribe = subscriptionDetail
+      ? new Date(subscriptionDetail.expires_at).getMilliseconds() < Date.now()
+      : false;
     if (!isSubscribe) {
       return navigation.navigate('membership');
     }
     return navigation.navigate('fileViewer', {
-      name: name,
-      file: file,
+      name,
+      id,
     });
   }
   useLayoutEffect(() => {

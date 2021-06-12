@@ -22,12 +22,14 @@ const FormContainerComponent = ({
       if (res.data.email && !res.data.isVerfied) {
         return navigaiton.navigate('codeConfirmation', {
           email: res.data.email,
+          url: 'auths/email/verifyEmail/',
         });
       }
-
+      setSubmitting(false);
       await dispatch(authAction(res.data.data, res.data.token));
       return navigaiton.navigate('Home');
     } catch (error) {
+      setSubmitting(false);
       if (error.code === 'ECONNABORTED') {
         Alert.alert(
           'Something went wrong',
@@ -39,7 +41,6 @@ const FormContainerComponent = ({
         if (status === 400 && data.field) {
           setFieldError(data.field, data.message);
         } else if (status === 400 && data.isVerfied === false) {
-          setSubmitting(false);
           return navigaiton.navigate('sendVerificationEmail', {
             email: data.email,
             url: '/auths/email/sendToken',
@@ -52,7 +53,6 @@ const FormContainerComponent = ({
         }
       }
     }
-    setSubmitting(false);
   };
   return (
     <Formik
@@ -83,6 +83,5 @@ const styles = StyleSheet.create({
   formContainer: {
     padding: 10,
     justifyContent: 'space-around',
-    // height: Dimensions.get('screen').height / 4,
   },
 });

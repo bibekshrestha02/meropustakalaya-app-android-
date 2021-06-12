@@ -37,7 +37,9 @@ const MembershipDetailComponent = ({ data }) => {
       <TextContainerTempletes>
         <Text style={styles.text}>
           Remaining Days :
-          {data ? `${getDay(Date.now(), data.expires_at)} days` : '-'}
+          {data.expires_at
+            ? `${getDay(Date.now(), data.expires_at)} days`
+            : '-'}
         </Text>
       </TextContainerTempletes>
     </MainContainerTempletes>

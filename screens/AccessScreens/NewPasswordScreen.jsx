@@ -22,6 +22,7 @@ const NewPasswordScreen = ({ navigation, route }) => {
         newPassword: value.newPassword,
         otp,
       });
+      setSubmitting(false);
       Alert.alert(
         'Success!',
         'Password Successfully Change. Login to your account',
@@ -33,12 +34,12 @@ const NewPasswordScreen = ({ navigation, route }) => {
         ]
       );
     } catch (error) {
+      setSubmitting(false);
       Alert.alert(
         'Something went wrong',
         'There might be internet connection problem. Please check your internet connection and try again'
       );
     }
-    setSubmitting(false);
   };
   return (
     <View style={styles.container}>
@@ -53,19 +54,14 @@ const NewPasswordScreen = ({ navigation, route }) => {
                 component={MyInputText}
                 name='newPassword'
                 placeholder='Enter your newPassword'
-                keyboardType='email-address'
                 autoFocus={true}
                 secureTextEntry={true}
               />
               <LoadingComponent isVisible={isSubmitting} />
               <MyButton
                 title='Create'
-                containerStyle={{
-                  height: 40,
-                }}
-                textStyle={{
-                  fontSize: 20,
-                }}
+                containerStyle={styles.containerStyle}
+                textStyle={styles.textStyle}
                 onPress={submitForm}
               />
             </>
@@ -83,5 +79,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 20,
     marginVertical: 40,
+  },
+  textStyle: {
+    fontSize2: 20,
+  },
+  containerStyle: {
+    height: 40,
   },
 });

@@ -72,7 +72,7 @@ const MainNavigation = () => {
         </Stack.Screen>
         <Stack.Screen
           options={{
-            title: 'Verifyin Your Email',
+            title: 'Verify Your Email',
             ...accessHeaderConfig,
           }}
           component={CodeConfirmationScreen}

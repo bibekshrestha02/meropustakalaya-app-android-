@@ -9,7 +9,7 @@ const ImageContainer = ({ photoUrl, id }) => {
     <View style={styles.imageContainer}>
       <Image
         style={styles.image}
-        source={{ uri: `${Url}${photoUrl}` }}
+        source={{ uri: photoUrl }}
         resizeMode='contain'
       />
       {isLogin && (

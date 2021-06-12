@@ -13,6 +13,7 @@ const SendEmailVerificationScreen = ({ route, navigation }) => {
       const res = await Axios.post(url, {
         email: email,
       });
+      setLoading(false);
       navigation.navigate('codeConfirmation', {
         email: res.data.email,
         url: isForgetPassword
@@ -21,6 +22,7 @@ const SendEmailVerificationScreen = ({ route, navigation }) => {
         isForgetPassword: isForgetPassword,
       });
     } catch (error) {
+      setLoading(false);
       Alert.alert(
         'Something went wrong!',
         `There might be a network problem. Try again.`,
@@ -32,14 +34,13 @@ const SendEmailVerificationScreen = ({ route, navigation }) => {
         ]
       );
     }
-    setLoading(false);
   };
   return (
     <View style={styles.container}>
       <Title name='Verify your email address' />
       <MyButton
         title='Continue'
-        textStyle={{ fontSize: 18 }}
+        textStyle={styles.textStyle}
         onPress={handler}
       />
       <LoadingComponent isVisible={isLoading} />
@@ -55,4 +56,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textStyle: { fontSize: 18 },
 });

@@ -7,7 +7,6 @@ import MyInputText from '../../components/MyInputs/MyInputText';
 import * as Yup from 'yup';
 
 const LoginScreen = ({ navigation, route }) => {
-  console.log(route);
   const values = {
     email: '',
     password: '',

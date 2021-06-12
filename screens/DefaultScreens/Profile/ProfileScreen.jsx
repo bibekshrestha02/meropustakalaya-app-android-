@@ -43,12 +43,13 @@ const ProfileScreen = ({ navigation }) => {
     setSubmitting(true);
     try {
       await dispatch(editNameAction(value));
+      setSubmitting(false);
       editNameModalHandler();
     } catch (error) {
+      setSubmitting(false);
       Alert('Something Went wrong!', 'Something went wrong try again');
       editNameModalHandler();
     }
-    setSubmitting(false);
   };
 
   const changePasswordModalHandler = () => {
@@ -61,26 +62,23 @@ const ProfileScreen = ({ navigation }) => {
     setSubmitting(true);
     try {
       await changePasswordAction(value);
-      changePasswordModalHandler();
       Alert.alert('Success!', 'Password changed successfully😊');
       setSubmitting(false);
+      changePasswordModalHandler();
     } catch (error) {
-      let alerErrMessage = Alert.alert(
-        'Something went wrong',
-        'There might be internet connection problem. Please check your internet connection and try again'
-      );
+      setSubmitting(false);
       if (error.code === 'ECONNABORTED') {
-        alerErrMessage;
+        Alert.alert(
+          'Something went wrong',
+          'There might be internet connection problem. Please check your internet connection and try again'
+        );
       } else {
         const { status, data } = error.response;
         if (status === 400) {
           setFieldError(data.name, data.message);
-        } else {
-          alerErrMessage;
         }
       }
     }
-    setSubmitting(false);
   };
   const data = useSelector((state) => state.client);
   return (

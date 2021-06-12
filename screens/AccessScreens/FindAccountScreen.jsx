@@ -24,6 +24,8 @@ const FindAccountScreen = ({ navigation }) => {
         isForgetPassword: true,
       });
     } catch (error) {
+      setSubmitting(false);
+
       if (error.response.status === 400) {
         setFieldError('email', error.response.data.message);
       } else {
@@ -33,7 +35,6 @@ const FindAccountScreen = ({ navigation }) => {
         );
       }
     }
-    setSubmitting(false);
   };
   return (
     <View style={styles.container}>
