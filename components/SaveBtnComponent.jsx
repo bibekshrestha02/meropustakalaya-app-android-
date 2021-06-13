@@ -9,11 +9,7 @@ const SaveBtnComponent = ({ size, id }) => {
   const saveBook = useSelector((state) => state.client.saveBook);
   let isSave = saveBook.includes(id.toString());
   const saveBookHandler = async () => {
-    try {
-      await dispatch(saveBookAction(id));
-    } catch (error) {
-      console.log(error.response);
-    }
+    await dispatch(saveBookAction(id));
   };
   return (
     <Pressable style={styles.saveContainer} onPress={saveBookHandler}>

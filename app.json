@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Meropustakaya-mble",
+    "name": "Meropustakaya",
     "slug": "meropustakaya-mble",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Background.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,10 +18,8 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "package": "com.bibek.meropustakalaya",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/icon.png"

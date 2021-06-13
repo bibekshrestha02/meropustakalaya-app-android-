@@ -22,11 +22,11 @@ const UserReviewContainer = ({ data }) => {
     try {
       values.book = data._id;
       await dispatch(addBookReviewAction(values));
+      setSubmitting(false);
     } catch (error) {
-      console.log(error);
+      setSubmitting(false);
       Alert.alert('Something went wrong!', 'Something went wrong try again');
     }
-    setSubmitting(false);
   };
   const reviewDeleteHandler = async (values, { setSubmitting, setValues }) => {
     async function handler() {

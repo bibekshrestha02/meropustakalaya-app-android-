@@ -53,12 +53,12 @@ const MembershipScreen = ({ navigation }) => {
       await dispatch(subscribeAction(selectedCard._id));
       setModal(false);
       paymentModalHandler(true);
+      setPaymentProcess(false);
     } catch (error) {
-      console.log(error.response);
+      setPaymentProcess(false);
       setModal(false);
       paymentModalHandler(false);
     }
-    setPaymentProcess(false);
   };
   return (
     <FetchApiTemplete status={status} retryHandler={fetchDataHandler}>

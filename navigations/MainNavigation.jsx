@@ -30,12 +30,8 @@ const MainNavigation = () => {
     },
   };
   const initialCheck = async () => {
-    try {
-      setLoading(true);
-      await dispatch(autoLogin());
-    } catch (error) {
-      console.log(error);
-    }
+    setLoading(true);
+    await dispatch(autoLogin());
     setLoading(false);
   };
   useEffect(() => {

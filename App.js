@@ -8,6 +8,8 @@ import SaveBooksReducer from './store/reducer/SaveBooksReducer';
 import BookDetailsReducer from './store/reducer/BookDetailsReducer';
 import MainNavigation from './navigations/MainNavigation';
 import ReduxThunk from 'redux-thunk';
+import ErrorBoundary from 'react-native-error-boundary';
+import ErrorFallbackComponent from './components/ErrorFallbackComponent';
 export default function App() {
   const reducer = combineReducers({
     client: ClientReducer,
@@ -25,7 +27,9 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <MainNavigation />
+      <ErrorBoundary FallbackComponent={ErrorFallbackComponent}>
+        <MainNavigation />
+      </ErrorBoundary>
     </Provider>
   );
 }
