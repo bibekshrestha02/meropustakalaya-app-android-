@@ -1,21 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, Modal } from 'react-native';
 import { Color } from '../utils/colors';
-import { MaterialIcons } from '@expo/vector-icons';
 
 const LoadingComponent = ({ isVisible, message }) => {
   return (
-    <Modal transparent={true} visible={true}>
+    <Modal transparent={true} visible={isVisible}>
       <View style={[styles.container]}>
         <View style={styles.iconContainer}>
-          {/* <ActivityIndicator size='large' color={Color.red} /> */}
-
-          <MaterialIcons
-            name='menu-book'
-            size={60}
-            color={Color.red}
-            style={styles.icon}
-          />
+          <ActivityIndicator size='large' color={Color.red} />
           <Text style={styles.text}>{message ? message : 'Loading...'}</Text>
         </View>
       </View>
@@ -46,7 +38,5 @@ const styles = StyleSheet.create({
     color: Color.black,
     letterSpacing: 1,
   },
-  icon: {
-    opacity: 1,
-  },
+  icon: {},
 });
