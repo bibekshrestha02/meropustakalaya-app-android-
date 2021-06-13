@@ -12,16 +12,30 @@ const RatingComponent = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Rating
-        type='custom'
-        imageSize={size ? size : 20}
-        readonly={isDisabled}
-        startingValue={ratingCount}
-        style={styles.rating}
-        ratingColor={Color.red}
-        ratingBackgroundColor='#EDF0F5'
-        onFinishRating={ratingHandler}
-      />
+      <View style={{ flexDirection: 'row' }}>
+        <Rating
+          type='custom'
+          imageSize={size ? size : 20}
+          readonly={isDisabled}
+          startingValue={ratingCount}
+          style={styles.rating}
+          ratingColor={Color.red}
+          ratingBackgroundColor='#EDF0F5'
+          onFinishRating={ratingHandler}
+        />
+        {isDisabled && (
+          <Text
+            style={{
+              fontSize: size ? size / 2 : 10,
+              color: Color.black,
+              fontFamily: 'GentiumBold',
+            }}>
+            {' '}
+            {ratingCount}
+          </Text>
+        )}
+      </View>
+
       {error && <Text style={styles.errorText}>* {error}</Text>}
     </View>
   );
